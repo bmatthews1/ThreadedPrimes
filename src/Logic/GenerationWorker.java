@@ -13,7 +13,7 @@ public class GenerationWorker implements Runnable{
     private long number;
     private long sqrt;
     private long halfSqrt;
-    private static boolean[] foundFactor = new boolean[2];
+    private static boolean foundFactor;
 
 
     public GenerationWorker(String task, Long number){
@@ -22,9 +22,7 @@ public class GenerationWorker implements Runnable{
         double numberToDouble = number.doubleValue();
         this.sqrt = (long) Math.ceil(Math.sqrt(numberToDouble));
         this.halfSqrt = (long) Math.ceil((double) (sqrt/2));
-        foundFactor[0] = false;
-        foundFactor[1] = false;
-
+        foundFactor = false;
     }
     public static void main(String[] args){
         GenerationWorker upper = new GenerationWorker("upper", Long.parseLong(args[0]));
@@ -33,7 +31,7 @@ public class GenerationWorker implements Runnable{
         Thread t2 = new Thread(lower);
         t1.start();
         t2.start();
-        if(!foundFactor[0] && !foundFactor[1]){
+        if(foundFactor){
             System.out.println("It's a prime alright!");
         }
         else{
@@ -51,23 +49,23 @@ public class GenerationWorker implements Runnable{
         }
     }
 
-    private void checkLower(long halfSqrt){
+    private synchronized void checkLower(long halfSqrt){
 
-        for(long i = 2; i < halfSqrt; i++){
+        for(long i = 2; i <= halfSqrt; i++){
 
             if(number % i == 0){
-                foundFactor[0] = true;
+                foundFactor = true;
                 return;
             }
         }
     }
 
-    private void checkUpper(long halfSqrt, long sqrt){
+    private synchronized void checkUpper(long halfSqrt, long sqrt){
 
-        for(long i = halfSqrt; i < sqrt; i++){
+        for(long i = halfSqrt; i <= sqrt; i++){
 
             if(number % i == 0){
-                foundFactor[1] = true;
+                foundFactor = true;
                 return;
             }
         }
