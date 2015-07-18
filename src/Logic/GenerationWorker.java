@@ -1,22 +1,27 @@
 package Logic;
 
+/*
+   Ari Rappaport
+   Student at UNM
 
-import java.util.ArrayList;
-
-/**
- * Created by arirappaport on 7/17/15.
+   Multithreaded Class that should run in parallel to reduce time
+   needed to generate large primes
  */
 public class GenerationWorker implements Runnable{
 
     private String task;
-    private double sqrt;
+    private long number;
+    private long sqrt;
+    private long halfSqrt;
     private static boolean[] foundFactor = new boolean[2];
 
 
     public GenerationWorker(String task, Long number){
-        this.task = task;
         double numberToDouble = number.doubleValue();
-        this.sqrt = Math.ceil(Math.sqrt(numberToDouble));
+        this.task = task;
+        this.number = number;
+        this.sqrt = (long) Math.ceil(Math.sqrt(numberToDouble));
+        this.halfSqrt = (long) Math.ceil((double) (sqrt/2));
         foundFactor[0] = false;
         foundFactor[1] = false;
 
@@ -28,22 +33,44 @@ public class GenerationWorker implements Runnable{
         Thread t2 = new Thread(lower);
         t1.start();
         t2.start();
+        if(!foundFactor[0] && !foundFactor[1]){
+            System.out.println("It's a prime alright!");
+        }
+        else{
+            System.out.println("Not a prime, I'm afraid.");
+        }
     }
 
     @Override
     public void run(){
         if((this.task).equals("upper")){
-            checkUpper(sqrt);
+            checkUpper(halfSqrt, sqrt);
         }
         if((this.task).equals("lower")){
-            checkLower(sqrt);
+            checkLower(halfSqrt);
         }
     }
 
-    private void checkUpper(double number){
-        
-    }
-    private void checkLower(double number){}
+    private void checkLower(long halfSqrt){
 
+        for(long i = 0; i < halfSqrt; i++){
+
+            if(number % i == 0){
+                foundFactor[0] = false;
+                return;
+            }
+        }
+    }
+
+    private void checkUpper(long halfSqrt, long sqrt){
+
+        for(long i = halfSqrt; i < sqrt; i++){
+
+            if(number % i == 0){
+                foundFactor[1] = false;
+                return;
+            }
+        }
+    }
 
 }
