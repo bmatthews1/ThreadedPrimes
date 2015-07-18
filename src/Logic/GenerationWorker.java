@@ -17,9 +17,9 @@ public class GenerationWorker implements Runnable{
 
 
     public GenerationWorker(String task, Long number){
-        double numberToDouble = number.doubleValue();
         this.task = task;
         this.number = number;
+        double numberToDouble = number.doubleValue();
         this.sqrt = (long) Math.ceil(Math.sqrt(numberToDouble));
         this.halfSqrt = (long) Math.ceil((double) (sqrt/2));
         foundFactor[0] = false;
@@ -53,10 +53,10 @@ public class GenerationWorker implements Runnable{
 
     private void checkLower(long halfSqrt){
 
-        for(long i = 0; i < halfSqrt; i++){
+        for(long i = 2; i < halfSqrt; i++){
 
             if(number % i == 0){
-                foundFactor[0] = false;
+                foundFactor[0] = true;
                 return;
             }
         }
@@ -67,7 +67,7 @@ public class GenerationWorker implements Runnable{
         for(long i = halfSqrt; i < sqrt; i++){
 
             if(number % i == 0){
-                foundFactor[1] = false;
+                foundFactor[1] = true;
                 return;
             }
         }
