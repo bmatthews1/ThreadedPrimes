@@ -6,9 +6,9 @@ import java.util.LinkedList;
 
 public class PrimeSpiral extends JFrame { // implements Runnable{
 
-    public final int FRAME_WIDTH = 1200;
-    public final int FRAME_HEIGHT = 1200;
-    public final int NUM_ITERATIONS = 600;
+    public final int FRAME_WIDTH = 800;
+    public final int FRAME_HEIGHT = 800;
+    public final int NUM_ITERATIONS = 400;
     public final int NUM_DIRECTIONS = 4;
     //public final int SOME_NUMBER = 5;
     private int[] xDir = {1, 0, -1, 0};
@@ -28,6 +28,7 @@ public class PrimeSpiral extends JFrame { // implements Runnable{
         setVisible(true);
 
     }
+
     private void run(){
 
         while(true){
@@ -62,7 +63,7 @@ public class PrimeSpiral extends JFrame { // implements Runnable{
         return true;
     }
 
-    private void paintPrimes(Graphics g){
+    private void paintPrimes (Graphics g){
 
         int totalNum = 1;
         for(int numLayers = 1; numLayers < NUM_ITERATIONS; numLayers++) {
@@ -71,8 +72,12 @@ public class PrimeSpiral extends JFrame { // implements Runnable{
                 for (int dist = 0; dist < 2 * numLayers; dist++) {
                     updateCoordinates(curDir);
                     if (isItPrime(totalNum)) {
-                        //if(totalNum % SOME_NUMBER == 1) g.setColor(Color.blue);
-                        //else g.setColor(Color.MAGENTA);
+                        g.setColor(Color.white);
+                        g.drawLine((int) curTile.getX(), (int) curTile.getY(),
+                                   (int) curTile.getX(), (int) curTile.getY());
+                    }
+                    else {
+                        g.setColor(Color.black);
                         g.drawLine((int) curTile.getX(), (int) curTile.getY(),
                                    (int) curTile.getX(), (int) curTile.getY());
                     }
