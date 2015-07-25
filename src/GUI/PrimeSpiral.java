@@ -4,13 +4,29 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.LinkedList;
 
+/*
+Ari Rappaport
+University of New Mexico
+07.25.15
+
+Program to generate a prime spiral, where the tiles are numbered
+
+        |9 |10|11|12|13|
+        |24|1 |2 |3 |14|
+        |23|8 |0 |4 |15|
+        |22|7 |6 |5 |16|
+        |21|20|19|18|17|
+
+ */
+
 public class PrimeSpiral extends JFrame { // implements Runnable{
 
-    public final int FRAME_WIDTH = 800;
-    public final int FRAME_HEIGHT = 800;
-    public final int NUM_ITERATIONS = 400;
+    public final int FRAME_WIDTH = 1000;
+    public final int FRAME_HEIGHT = 1000;
+    public final int NUM_ITERATIONS = 500;
     public final int NUM_DIRECTIONS = 4;
     //public final int SOME_NUMBER = 5;
+    // EAST, SOUTH, WEST, NORTH
     private int[] xDir = {1, 0, -1, 0};
     private int[] yDir = {0, 1, 0, -1};
     private Point startTile = new Point((int)(FRAME_WIDTH/2), (int)(FRAME_HEIGHT/2));
